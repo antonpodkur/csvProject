@@ -41,7 +41,7 @@ const storage = multer.diskStorage({
 const upload = multer({storage});
 
 
-app.post("/document", upload.array('file',1), async function(req, res) {
+app.post("/api/document", upload.array('file',1), async function(req, res) {
     const docFileName = req.files[0].filename;
     const docLocalUrl = req.files[0].path;
     fileName = './' + docLocalUrl;

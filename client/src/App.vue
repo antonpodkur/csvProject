@@ -29,7 +29,7 @@ export default {
     sumbitFile(){
       let formData = new FormData();
       formData.append('file', this.file);
-      axios.post('http://localhost:5002/document',
+      axios.post('http://localhost:5002/api/document',
           formData,
           {
             headers: {
