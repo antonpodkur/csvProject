@@ -2,6 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const cors = require('cors');
 const csv = require('csvtojson')
+const fs = require('fs');
 require('dotenv').config();
 
 const app = express();
@@ -42,9 +43,18 @@ app.post("/document", upload.array('file',1), async function(req, res) {
     const docLocalUrl = req.files[0].path;
     fileName = './' + docLocalUrl;
     console.log(fileName);
-    const jsonArr = await csv().fromFile(fileName);
-    console.log(jsonArr);
-})
+    // const jsonArr = await csv().fromFile(fileName);
+    // console.log(jsonArr);
+
+    const result = await csv({
+        noheader:true,
+        output: "csv"
+    })
+    .fromFile(fileName)
+    // const anw = result.map(arr => JSON.stringify(arr.filter(x=>x))).filter(item => item.toLowerCase().includes('корзина'))
+    const anw = result.map(arr => JSON.stringify(arr.filter(x=>x)));
+    console.log(anw);
+});
 
 
 app.listen(process.env.PORT || 5002, function () {
