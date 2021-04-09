@@ -2,10 +2,11 @@
   <div id="find-document">
    <h1>Find Page</h1>
    <div class="container">
-     <label>File
+     <label>Text
        <input type="text" id="str" ref="str" v-model="str"/>
      </label>
      <button @click="Find()">Sumbit</button>
+     <p>{{this.answer}}</p>
    </div>
   </div>
 </template>
@@ -20,18 +21,34 @@ export default {
   data(){
     return {
         str: '',
-        result: null
+        result: null,
+        answer: ''
     }
   },
   methods: {
-    async Find(){
+    Find(){
         // axios("http://localhost:5002/api/find").then(res => (this.result = res));
-        const res = await axios('http://localhost:5002/api/find');
-        this.result = res.data;
-        console.log(this.result);
-        axios("http://localhost:5002/api/find").then(res => console.log(res));
+        // const res = await axios('http://localhost:5002/api/find');
+        // this.result = res.data;
+        // console.log(this.result);
+        // axios("http://localhost:5002/api/find").then(res => console.log(res));
+
+        axios.get('http://localhost:5002/api/find')
+        .then(function (response) {
+            this.result = response.data;
+            console.log(this.result[0].data);
+        }.bind(this));
+
+        this.answer = this.result[0].data.filter(item => item.toLowerCase().includes(this.str))
     }
   },
+  created() {
+      axios.get('http://localhost:5002/api/find')
+        .then(function (response) {
+            this.result = response.data;
+            console.log(this.result[0].data);
+        }.bind(this));
+  }
 }
 </script>
 
