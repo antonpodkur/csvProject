@@ -1,16 +1,13 @@
 <template>
   <div id="app">
-    <AddDocument/>
+    <router-view/>
   </div>
 </template>
 
 <script>
-import AddDocument from './components/AddDocument';
-
 export default {
   name: 'App',
   components: {
-    AddDocument,
   },
 }
 </script>

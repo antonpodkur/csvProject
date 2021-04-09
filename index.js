@@ -41,6 +41,16 @@ const storage = multer.diskStorage({
 const upload = multer({storage});
 
 
+app.get("/api/find", async (req, res)=> {
+    try{
+        const document = await Document.find();
+        res.json(document);
+    }catch(e){
+        res.json({message: e.message});
+    }
+});
+
+
 app.post("/api/document", upload.array('file',1), async function(req, res) {
     const docFileName = req.files[0].filename;
     const docLocalUrl = req.files[0].path;
