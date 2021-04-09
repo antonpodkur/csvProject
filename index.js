@@ -55,7 +55,7 @@ app.post("/api/document", upload.array('file',1), async function(req, res) {
     const docFileName = req.files[0].filename;
     const docLocalUrl = req.files[0].path;
     fileName = './' + docLocalUrl;
-    console.log(fileName);
+    // console.log(fileName);
     // const jsonArr = await csv().fromFile(fileName);
     // console.log(jsonArr);
 
