@@ -1,14 +1,19 @@
 import Vue from 'vue'
 import App from './App.vue'
 import VueRouter from 'vue-router'
-import AddDocument from './components/AddDocument'
-import FindDocument from './components/FindDocument'
+import AddDocument from './views/AddDocument'
+import FindDocument from './views/FindDocument'
+import Home from './views/Home';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "",
+    component: Home
+  },
+  {
+    path: "/add",
     component: AddDocument
   },
   {

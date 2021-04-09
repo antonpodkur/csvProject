@@ -27,19 +27,13 @@ export default {
   },
   methods: {
     Find(){
-        // axios("http://localhost:5002/api/find").then(res => (this.result = res));
-        // const res = await axios('http://localhost:5002/api/find');
-        // this.result = res.data;
-        // console.log(this.result);
-        // axios("http://localhost:5002/api/find").then(res => console.log(res));
-
         axios.get('http://localhost:5002/api/find')
         .then(function (response) {
             this.result = response.data;
-            console.log(this.result[1].data);
+            // console.log(this.result[0].data);
         }.bind(this));
 
-        this.answer = this.result[1].data.filter(item => item.toLowerCase().includes(this.str))
+        this.answer = this.result[0].data.filter(item => item.toLowerCase().includes(this.str))
     }
   },
   created() {
