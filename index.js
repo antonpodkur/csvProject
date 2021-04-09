@@ -107,11 +107,6 @@ app.post("/document", upload.array('file',1), async function(req, res) {
     const docLocalUrl = req.files[0].path;
 })
 
-app.post("/document", (req, res) => {
-    res.send("<h2>Sucess</h2>")
-})
-
-
 
 app.listen(process.env.PORT || 5002, function () {
     console.log("App listening on", 5002);
