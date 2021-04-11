@@ -1,21 +1,27 @@
 <template>
-  <div id="add-document">
-   <h1>Upload page</h1>
-   <div class="container">
-     <label>File
-       <input type="file" id="file" ref="file" @change="handleFileUpload()"/>
-     </label>
-     <button @click="sumbitFile()">Sumbit</button>
-   </div>
-  </div>
+  <div>
+    <Header></Header>
+    <div id="add-document">
+      <h1>Upload page</h1>
+      <div class="container">
+        <label>File
+          <input type="file" id="file" ref="file" @change="handleFileUpload()"/>
+        </label>
+        <button @click="sumbitFile()">Sumbit</button>
+      </div>
+      </div>
+      </div>
 </template>
 
 <script>
 import axios from 'axios';
 
+import Header from "../components/Header";
+
 export default {
   name: 'AddDocument',
   components: {
+    Header,
   },
   data(){
     return {

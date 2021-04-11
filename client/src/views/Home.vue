@@ -1,23 +1,26 @@
 <template>
-  <div id="home">
-      <h1>Home</h1>
-      <ul>
-          <li><a href="/add">Add new table</a></li>
-          <li><a href="/find">Find</a></li>
-      </ul>
+  <div>
+    <Header></Header>
+    <div id="home">
+      <h1>Home Page</h1>
+      <h5>Some text here</h5>
+    </div>
   </div>
 </template>
 
 <script>
+import Header from "../components/Header";
+
 export default {
   name: 'Home',
   components: {
+    Header,
   },
 }
 </script>
 
 <style>
-#app {
+#home {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
