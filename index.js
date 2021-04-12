@@ -19,7 +19,7 @@ app.use(cors(corsOptions));
 
 
 const uploadFolder = "./uploads";
-let fileName = '';
+let shortName = '';
 
 const storage = multer.diskStorage({
     destination(req, file, cb){
@@ -29,6 +29,8 @@ const storage = multer.diskStorage({
         const {originalname: originalName} = file;
 
         let ogName = originalName.split('.')[0]
+        shortName = ogName;
+        console.log(shortName);
 
         let someNameToSet = 'document'
 
@@ -65,10 +67,10 @@ app.post("/api/document", upload.array('file',1), async function(req, res) {
     })
     .fromFile(fileName)
     // const anw = result.map(arr => JSON.stringify(arr.filter(x=>x))).filter(item => item.toLowerCase().includes('корзина'))
-    const answ = result.map(arr => JSON.stringify(arr.filter(x=>x)));
+    const answ = result.map(arr => JSON.stringify(arr));  //.filter(x=>x)
     // console.log(answ);
 
-    const document  = new Document({data: answ});
+    const document  = new Document({name: shortName, data: answ});
     try{
         const savedDocument = await document.save();
         res.json(savedDocument);

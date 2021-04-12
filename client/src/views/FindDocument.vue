@@ -3,17 +3,28 @@
     <Header></Header>
     <div id="find-document">
     <h1>Find Page</h1>
-    <div class="search-panel">
-        <!-- <label>Text
-          <input type="text" id="str" ref="str" v-model="str"/>
-        </label> -->
-        <input type="text" id="str" ref="str" v-model="str"/>
-        <button @click="Find()">Sumbit</button>
-        <!-- <p>{{this.answers}}</p> -->
-        <!-- <div v-for="answer in answersObjs" :key="answer.index">
-          <p>{{answer.data}}</p>
-        </div> -->
-      </div>
+
+    <div class="search-panel" id="search-panel">
+      <input type="text" id="str" ref="str" v-model="str"/>
+      <button @click="Find()">Sumbit</button>
+    </div>
+    <div class="filters">
+      <h2>Filters</h2>
+      <label>name
+        <input type="text" v-model="name">
+      </label>
+      <label>year
+        <input type="text" v-model="year">
+      </label>
+      <label>month
+        <input type="text" v-model="month">
+      </label>
+      <label>day
+        <input type="text" v-model="day">
+      </label>
+      <button @click="Find()">Find</button>
+    </div>
+          <h2 class="table-name">{{element.name}}</h2>
           <div class="data-table">
           <table>
             <tbody>
@@ -45,35 +56,50 @@ export default {
         str: '',
         result: null,
         answers: '',
-        answersObjs: []
+        answersObjs: [],
+        state: true,
+        element: {},
+        name: '',
+        year: '',
+        month: '',
+        day: ''
     }
   },
   methods: {
     Find(){
-        // axios.get('http://localhost:5002/api/find')
-        // .then(function (response) {
-        //     this.result = response.data;
-        //     // console.log(this.result[0].data);
-        // }.bind(this));
         const parseField = (str) => {
           str = str.slice(1, str.length-1).split(',');
           return str;
         }
+        console.log(this.name)
+        if(this.name!==''){
+          let tmp = this.result.filter(item => item.name === this.name);
 
+          if(tmp.length === 1) this.element = tmp[0];
+          else if(this.year==='' && this.month === '' && this.day ==='')
+            {
+              let biggestDate = Math.max.apply(null, tmp.map(e => new Date(e.uploaded_at)))
+              this.element = tmp.filter(item => new Date(item.uploaded_at) === biggestDate)[0]
+            }
+        }
 
-        this.answers = this.result[2].data.filter(item => item.toLowerCase().includes(this.str))
+        this.answers = this.element.data.filter(item => item.toLowerCase().includes(this.str))
         this.answersObjs = this.answers.map(element => ({index: this.answers.indexOf(element), data: parseField(element)}));
         console.log(this.answersObjs);
-    }
+    },
+
   },
   created() {
       axios.get('http://localhost:5002/api/find')
         .then(function (response) {
             this.result = response.data;
             console.log(this.result);
+            this.element = this.result[this.result.length-1]
+            console.log(this.element)
         }.bind(this));
-  }
+  },
 }
+
 </script>
 
 <style scoped>
@@ -95,6 +121,11 @@ export default {
   /* border-radius: 5px; */
 
   /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); */
+}
+
+.table-name {
+  margin-top: 25px;
+  font-size: 1.5em;
 }
 
 .data-table {
@@ -120,7 +151,7 @@ export default {
 }
 
 .data-table table th, .data-table table td {
-  padding: 12px 15px;
+  padding: 2px 2px;
 }
 
 .data-table table tbody tr {
@@ -139,6 +170,14 @@ export default {
 .data-table table tbody tr.active-row{
   font-weight: bold;
   color: #009879;
+  position: fixed;
+  z-index: 1;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
 }
-
 </style>

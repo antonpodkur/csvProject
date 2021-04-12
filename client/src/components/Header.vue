@@ -55,7 +55,7 @@ export default {
     .header {
         margin: 0;
         padding: 0;
-        width: 90%;
+        width: 100%;
         height: 80px;
         background-color: #101010;
         margin: 0 auto;
