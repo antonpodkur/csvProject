@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import AddDocument from './views/AddDocument'
 import FindDocument from './views/FindDocument'
 import Home from './views/Home';
+import vuetify from './plugins/vuetify';
 
 Vue.use(VueRouter);
 
@@ -31,5 +32,6 @@ Vue.config.productionTip = false
 
 new Vue({
   router,
-  render: h => h(App),
+  vuetify,
+  render: h => h(App)
 }).$mount('#app')
